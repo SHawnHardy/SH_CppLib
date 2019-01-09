@@ -14,6 +14,7 @@
 #include <gtest/gtest.h>
 
 #include <GraphTheory/graph.h>
+using namespace sh;
 
 const int graph_size = 300;
 
