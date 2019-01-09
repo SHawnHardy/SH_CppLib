@@ -14,6 +14,7 @@
 #include <gtest/gtest.h>
 
 #include <GraphTheory/graph.h>
+
 using namespace sh;
 
 const int graph_size = 300;
@@ -36,28 +37,39 @@ TEST(GraphTest, GraphAdjacencyMatrix_usage) {
 
     GraphAdjacencyMatrix g(graph_size);
 
+    for (int i = 0; i < graph_size * graph_size * 0.3; i++) {
+        int a, b;
+        do {
+            a = dis(rd);
+            b = dis(rd);
+        } while (st.find(std::make_pair(a, b)) != st.end());
+        st.insert(std::make_pair(a, b));
+        g.addEdge(a, b);
+    }
+
+    for (int i = 0; i < graph_size; i++) {
+        for (int j = 0; j < graph_size; j++) {
+            ASSERT_EQ(g.check(i, j), st.find(std::make_pair(i, j)) != st.end());
+        }
+    }
+
     int count = 1000;
     while (count--) {
+        int op = dis(rd);
         int a = dis(rd);
         int b = dis(rd);
-        int op = dis(rd);
+
         if (op & 1) {
             st.insert(std::make_pair(a, b));
             g.addEdge(a, b);
-
-            for (int i = 0; i < graph_size; i++) {
-                for (int j = 0; j < graph_size; j++) {
-                    ASSERT_EQ(g.check(i, j), st.find(std::make_pair(i, j)) != st.end());
-                }
-            }
         } else {
             st.erase(std::make_pair(a, b));
             g.delEdge(a, b);
+        }
 
-            for (int i = 0; i < graph_size; i++) {
-                for (int j = 0; j < graph_size; j++) {
-                    ASSERT_EQ(g.check(i, j), st.find(std::make_pair(i, j)) != st.end());
-                }
+        for (int i = 0; i < graph_size; i++) {
+            for (int j = 0; j < graph_size; j++) {
+                ASSERT_EQ(g.check(i, j), st.find(std::make_pair(i, j)) != st.end());
             }
         }
     }
