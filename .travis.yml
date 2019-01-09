@@ -1,8 +1,16 @@
 language: cpp
 sudo: required
-dist: xenial
-compiler:
-  - gcc
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      compiler: gcc
+    - os: linux
+      dist: xenial
+      compiler: clang
+    - os: osx
+      compiler: clang
+
 install:
   - ./install_gtest.sh
 script:
