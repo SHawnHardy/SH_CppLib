@@ -9,6 +9,7 @@
 #ifndef SH_GRAPH_THEORY_GRAPH_H
 #define SH_GRAPH_THEORY_GRAPH_H
 
+#include <assert.h>
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -36,9 +37,10 @@ protected:
 class GraphAdjacencyMatrix : public Graph {
 public:
     explicit GraphAdjacencyMatrix(int size) : Graph(size) {
-        data_ = new bool *[Graph::size_];
-        for (int i = 0; i < Graph::size_; i++) {
-            data_[i] = new bool[Graph::size_]();
+        assert(size > 0);
+        data_ = new bool *[size_];
+        for (int i = 0; i < size_; i++) {
+            data_[i] = new bool[size_]();
         }
     }
 
@@ -50,26 +52,26 @@ public:
     }
 
     bool check(int a, int b) const override {
+        assert(a < size_ && b < size_);
         return data_[a][b];
     }
 
     void addEdge(int a, int b) override {
+        assert(a < size_ && b < size_);
         data_[a][b] = true;
     }
 
     void delEdge(int a, int b) override {
+        assert(a < size_ && b < size_);
         data_[a][b] = false;
     }
 
     void clear() override {
         for (int i = 0; i < size_; i++) {
-            delete[] data_[i];
-            data_[i] = new bool[Graph::size_]();
+            for (int j = 0; j < size_; j++) {
+                data_[i][j] = false;
+            }
         }
-    }
-
-    bool &getEdge(int a, int b) {
-        return data_[a][b];
     }
 
 private:

@@ -9,35 +9,15 @@
 #include <assert.h>
 #include <random>
 #include <iostream>
-#include <string>
 #include <set>
 
 #include <gtest/gtest.h>
 
 #include <GraphTheory/graph.h>
 
-const int graph_size = 200;
+const int graph_size = 300;
 
-class GraphTest : public ::testing::Test {
-
-protected:
-    void SetUp() override {
-        std::random_device rd;
-        std::uniform_int_distribution<> dis(0, graph_size - 1);
-        for (int i = 0; i < (int) (graph_size * 0.3); i++) {
-            int a, b;
-            do {
-                a = dis(rd);
-                b = dis(rd);
-            } while (st.find(std::make_pair(a, b)) != st.end());
-            st.insert(std::make_pair(a, b));
-        }
-    }
-
-    std::set<std::pair<int, int>> st;
-};
-
-TEST_F(GraphTest, GraphAdjacencyMatrix_initial) {
+TEST(GraphTest, GraphAdjacencyMatrix_initial) {
     GraphAdjacencyMatrix g(graph_size);
     ASSERT_EQ(g.get_size(), graph_size);
 
@@ -48,15 +28,43 @@ TEST_F(GraphTest, GraphAdjacencyMatrix_initial) {
     }
 }
 
-TEST_F(GraphTest, GraphAdjacencyMatrix_addEdge) {
+TEST(GraphTest, GraphAdjacencyMatrix_usage) {
+    std::random_device rd;
+    std::uniform_int_distribution<> dis(0, graph_size - 1);
+    std::set<std::pair<int, int>> st;
+
     GraphAdjacencyMatrix g(graph_size);
-    for (auto &&i : st) {
-        g.addEdge(i.first, i.second);
+
+    int count = 1000;
+    while (count--) {
+        int a = dis(rd);
+        int b = dis(rd);
+        int op = dis(rd);
+        if (op & 1) {
+            st.insert(std::make_pair(a, b));
+            g.addEdge(a, b);
+
+            for (int i = 0; i < graph_size; i++) {
+                for (int j = 0; j < graph_size; j++) {
+                    ASSERT_EQ(g.check(i, j), st.find(std::make_pair(i, j)) != st.end());
+                }
+            }
+        } else {
+            st.erase(std::make_pair(a, b));
+            g.delEdge(a, b);
+
+            for (int i = 0; i < graph_size; i++) {
+                for (int j = 0; j < graph_size; j++) {
+                    ASSERT_EQ(g.check(i, j), st.find(std::make_pair(i, j)) != st.end());
+                }
+            }
+        }
     }
+
+    g.clear();
     for (int i = 0; i < graph_size; i++) {
         for (int j = 0; j < graph_size; j++) {
-            bool flag = st.find(std::make_pair(i, j)) != st.end();
-            ASSERT_EQ(g.check(i, j), flag);
+            ASSERT_FALSE(g.check(i, j));
         }
     }
 }
