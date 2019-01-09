@@ -1,0 +1,11 @@
+language: cpp
+sudo: required
+dist: xenial
+compiler:
+  - gcc
+install:
+  - ./install_gtest.sh
+script:
+  - ./build.sh
+after_success:
+  - ./codecov.sh
