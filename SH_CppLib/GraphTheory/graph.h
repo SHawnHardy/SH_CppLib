@@ -53,17 +53,20 @@ namespace sh {
         }
 
         bool check(int a, int b) const override {
-            assert(a < size_ && b < size_);
+            assert(a >= 0 && a < size_);
+            assert(b >= 0 && b < size_);
             return data_[a][b];
         }
 
         void addEdge(int a, int b) override {
-            assert(a < size_ && b < size_);
+            assert(a >= 0 && a < size_);
+            assert(b >= 0 && b < size_);
             data_[a][b] = true;
         }
 
         void delEdge(int a, int b) override {
-            assert(a < size_ && b < size_);
+            assert(a >= 0 && a < size_);
+            assert(b >= 0 && b < size_);
             data_[a][b] = false;
         }
 

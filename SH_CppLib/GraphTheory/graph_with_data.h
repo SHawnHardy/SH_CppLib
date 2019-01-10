@@ -53,7 +53,8 @@ namespace sh {
         }
 
         bool check(int a, int b) const override {
-            assert(a < GraphWithData<_Tp>::size_ && b < GraphWithData<_Tp>::size_);
+            assert(a >= 0 && a < GraphWithData<_Tp>::size_);
+            assert(b >= 0 && b < GraphWithData<_Tp>::size_);
             for (auto &&data : data_[a]) {
                 if (data.first == b)
                     return true;
@@ -62,20 +63,25 @@ namespace sh {
         }
 
         _Tp &addEdge(int a, int b, _Tp data) override {
-            assert(a < GraphWithData<_Tp>::size_ && b < GraphWithData<_Tp>::size_);
-            assert(!check(a, b));
+            assert(a >= 0 && a < GraphWithData<_Tp>::size_);
+            assert(b >= 0 && b < GraphWithData<_Tp>::size_);
+            if(check(a, b)) {
+                exit(1);
+            }
             data_[a].push_back(std::make_pair(b, data));
             return data_[a].back().second;
         }
 
         _Tp delEdge(int a, int b) override {
-            assert(a < GraphWithData<_Tp>::size_ && b < GraphWithData<_Tp>::size_);
+            assert(a >= 0 && a < GraphWithData<_Tp>::size_);
+            assert(b >= 0 && b < GraphWithData<_Tp>::size_);
             auto itrt = data_[a].begin();
             while (itrt != data_[a].end() && (*itrt).first != b) {
                 itrt++;
             }
-            if (itrt == data_[a].end())
+            if (itrt == data_[a].end()) {
                 exit(1);
+            }
             _Tp rt = (*itrt).second;
             data_[a].erase(itrt);
             return rt;
@@ -88,7 +94,8 @@ namespace sh {
         }
 
         _Tp &get_data(int a, int b) const override {
-            assert(a < GraphWithData<_Tp>::size_ && b < GraphWithData<_Tp>::size_);
+            assert(a >= 0 && a < GraphWithData<_Tp>::size_);
+            assert(b >= 0 && b < GraphWithData<_Tp>::size_);
             for (auto &&data : data_[a]) {
                 if (data.first == b)
                     return data.second;
@@ -97,10 +104,12 @@ namespace sh {
         }
 
         Itrt get_edges_begin(int a) const {
+            assert(a >= 0 && a < GraphWithData<_Tp>::size_);
             return data_[a].begin();
         }
 
         Itrt get_edges_end(int a) const {
+            assert(a >= 0 && a < GraphWithData<_Tp>::size_);
             return data_[a].end();
         }
 

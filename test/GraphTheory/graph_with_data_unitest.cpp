@@ -115,11 +115,6 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_usage) {
     }
 }
 
-TEST(GraphWithDataTest, GraphWithDataAdjacencyList_death_test) {
-    GraphWithDataAdjacencyList<int> g(graph_size);
-    EXPECT_EXIT(g.delEdge(0, 0), testing::ExitedWithCode(1), "");
-    EXPECT_EXIT(g.get_data(0, 0), testing::ExitedWithCode(1), "");
-}
 
 TEST(GraphWithDataTest, GraphWithDataAdjacencyList_get_edges) {
     std::random_device rd;
@@ -149,4 +144,12 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_get_edges) {
     }
 
     ASSERT_EQ(mp.size(), 0);
+}
+
+TEST(GraphWithDataTest, GraphWithDataAdjacencyList_death_test) {
+    GraphWithDataAdjacencyList<int> g(graph_size);
+    EXPECT_EXIT(g.delEdge(0, 0), testing::ExitedWithCode(1), "");
+    EXPECT_EXIT(g.get_data(0, 0), testing::ExitedWithCode(1), "");
+    g.addEdge(1, 1, 1);
+    EXPECT_EXIT(g.addEdge(1, 1, 2), testing::ExitedWithCode(1), "");
 }
