@@ -1,3 +1,9 @@
-add_executable(graph_unitest ./graph_unitest.cpp)
-target_link_libraries(graph_unitest ${CMAKE_THREAD_LIBS_INIT} ${GTEST_BOTH_LIBRARIES})
-add_test([GraphTheory]graph_unitest graph_unitest)
+set(src_list
+        graph_unitest;
+        graph_with_data_unitest)
+
+foreach (src ${src_list})
+    add_executable(${src} ./${src})
+    target_link_libraries(${src} ${CMAKE_THREAD_LIBS_INIT} ${GTEST_BOTH_LIBRARIES})
+    add_test([GraphTheory]${src} ${src})
+endforeach ()
