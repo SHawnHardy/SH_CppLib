@@ -2,6 +2,7 @@ set(src_list
         graph_unitest
         graph_with_data_unitest
         serialization_unitest
+        shortest_path
         )
 
 foreach (src ${src_list})
