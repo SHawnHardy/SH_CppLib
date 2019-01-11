@@ -6,14 +6,13 @@
  * @copyright MIT License
  */
 
-#include <assert.h>
 #include <random>
 #include <iostream>
 #include <set>
 
 #include <gtest/gtest.h>
 
-#include <GraphTheory/graph.h>
+#include "GraphTheory/graph.h"
 
 using namespace sh;
 
@@ -53,7 +52,7 @@ TEST(GraphTest, GraphAdjacencyMatrix_usage) {
         }
     }
 
-    int count = 1000;
+    int count = 300;
     while (count--) {
         int op = dis(rd);
         int a = dis(rd);

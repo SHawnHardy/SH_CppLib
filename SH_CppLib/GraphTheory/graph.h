@@ -27,7 +27,7 @@ namespace sh {
 
         virtual void clear() = 0;
 
-        int get_size() {
+        int get_size() const {
             return size_;
         }
 

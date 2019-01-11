@@ -1,6 +1,8 @@
 set(src_list
-        graph_unitest;
-        graph_with_data_unitest)
+        graph_unitest
+        graph_with_data_unitest
+        serialization_unitest
+        )
 
 foreach (src ${src_list})
     add_executable(${src} ./${src})
