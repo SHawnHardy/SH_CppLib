@@ -6,14 +6,13 @@
  * @copyright MIT License
  */
 
-#include <assert.h>
 #include <random>
 #include <iostream>
 #include <map>
 
 #include <gtest/gtest.h>
 
-#include <GraphTheory/graph_with_data.h>
+#include "GraphTheory/graph_with_data.h"
 
 using namespace sh;
 
@@ -60,7 +59,7 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_usage) {
         }
     }
 
-    int count = 1000;
+    int count = 300;
     while (count--) {
         int op = dis(rd) % 3;
         int a, b;
