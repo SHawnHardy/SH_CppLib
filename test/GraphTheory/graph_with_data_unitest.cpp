@@ -31,7 +31,7 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_initial) {
 
 TEST(GraphWithDataTest, GraphWithDataAdjacencyList_usage) {
     std::random_device rd;
-    std::uniform_int_distribution<> dis(0, graph_size - 1);
+    std::uniform_int_distribution<> dtb(0, graph_size - 1);
     std::map<std::pair<int, int>, int> mp;
 
     GraphWithDataAdjacencyList<int> g(graph_size);
@@ -39,10 +39,10 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_usage) {
     for (int i = 0; i < graph_size * graph_size * 0.3; i++) {
         int a, b;
         do {
-            a = dis(rd);
-            b = dis(rd);
+            a = dtb(rd);
+            b = dtb(rd);
         } while (mp.find(std::make_pair(a, b)) != mp.end());
-        int data = (a * 1000 + b) * 1000 + dis(rd);
+        int data = (a * 1000 + b) * 1000 + dtb(rd);
         mp[std::make_pair(a, b)] = data;
         g.addEdge(a, b, data);
     }
@@ -61,16 +61,16 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_usage) {
 
     int count = 300;
     while (count--) {
-        int op = dis(rd) % 3;
+        int op = dtb(rd) % 3;
         int a, b;
 
         do {
-            a = dis(rd);
-            b = dis(rd);
+            a = dtb(rd);
+            b = dtb(rd);
         } while ((mp.find(std::make_pair(a, b)) != mp.end()) ^ (op > 0));
 
 
-        int data = (a * 1000 + b) * 1000 + dis(rd);
+        int data = (a * 1000 + b) * 1000 + dtb(rd);
         switch (op) {
             case 0: {
                 mp[std::make_pair(a, b)] = data;
@@ -117,7 +117,7 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_usage) {
 
 TEST(GraphWithDataTest, GraphWithDataAdjacencyList_get_edges) {
     std::random_device rd;
-    std::uniform_int_distribution<> dis(0, graph_size - 1);
+    std::uniform_int_distribution<> dtb(0, graph_size - 1);
     std::map<std::pair<int, int>, int> mp;
 
     GraphWithDataAdjacencyList<int> g(graph_size);
@@ -125,10 +125,10 @@ TEST(GraphWithDataTest, GraphWithDataAdjacencyList_get_edges) {
     for (int i = 0; i < graph_size * graph_size * 0.3; i++) {
         int a, b;
         do {
-            a = dis(rd);
-            b = dis(rd);
+            a = dtb(rd);
+            b = dtb(rd);
         } while (mp.find(std::make_pair(a, b)) != mp.end());
-        int data = (a * 1000 + b) * 1000 + dis(rd);
+        int data = (a * 1000 + b) * 1000 + dtb(rd);
         mp[std::make_pair(a, b)] = data;
         g.addEdge(a, b, data);
     }

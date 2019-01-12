@@ -19,15 +19,15 @@ const int graph_size = 300;
 
 TEST(SerializationTest, GraphAdjacencyMatrix) {
     std::random_device rd;
-    std::uniform_int_distribution<> dis(0, graph_size - 1);
+    std::uniform_int_distribution<> dtb(0, graph_size - 1);
     std::set<std::pair<int, int>> st;
 
     GraphAdjacencyMatrix g(graph_size);
     for (int i = 0; i < graph_size * graph_size * 0.3; i++) {
         int a, b;
         do {
-            a = dis(rd);
-            b = dis(rd);
+            a = dtb(rd);
+            b = dtb(rd);
         } while (st.find(std::make_pair(a, b)) != st.end());
         st.insert(std::make_pair(a, b));
         g.addEdge(a, b);
